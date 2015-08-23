@@ -1,3 +1,4 @@
+
 ---
 title: "Machine Learning Project"
 author: "Linda Lester"
@@ -5,23 +6,11 @@ date: "August 4, 2015"
 output: html_document
 ---
 ## Executive Summary
-The goal of this project is to predict the manner of the exercise, classe,  by building a model using one of several variable available in the data base.  
-what you think the expected out of sample error is, and why you made the choices you did. You will also use your prediction model to predict 20 different test cases. 
-Start with question- input data- features-algorithm-parameters-evaluation
-training set- pick features, use cross validation
-Does the submission build a machine learning algorithm to predict activity quality from activity monitors?
+The goal of this project is to predict the manner of the exercise, classe,  by building a model using one of several variables available in the data base.  The data base is a collection of exercise m ovements captured using devices such as Jawbone and Fitbit.  Six individuals were recorded and the quality of their exercise was graded from A-E, with A indicating the exercise was performed correctly.  Using this data set I trained a model to identify the exercise quality and used this model to correctly predict the exercise grad for 20 unknowns.
 
+### Cleaning the Data
+I reviewed the data set and noted that the first few columns contained descriptive data such as the date and time of the exercise.  This data was not useful for the purpose of predicting the exercise quality and was removed.  In addition, several other columns contained predominatey blanks or NAs.  These columns were removed as well to produce a smaller, neater data set of 53 variables, all of which were likely to improve the prediction of exercise quality.
 
-
-
-Velloso, E.; Bulling, A.; Gellersen, H.; Ugulino, W.; Fuks, H. Qualitative Activity Recognition of Weight Lifting Exercises. Proceedings of 4th International Conference in Cooperation with SIGCHI (Augmented Human '13) . Stuttgart, Germany: ACM SIGCHI, 2013.
-
-Unilateral Dumbbell Biceps Curl, Unilateral Dumbbell Triceps Exten- sion and Unilateral Dumbbell Lateral Raise.
-Because of the characteristic noise in the sensor data, we used a Random Forest approach [28]. This algorithm is characterized by a subset of features, selected in a random and independent manner with the same distribution for each of the trees in the forest. To improve recognition performance we used an ensemble of classifiers using the “Bagging” method [6]. We used 10 random forests and each forest was implemented with 10 trees. The classifier was tested with 10-fold cross-validation and different windows sizes, all of them with 0.5s overlapping (except the window with 0.5s). The best window size found for this classification task was of 2.5s and the overall recognition performance was of 98.03% (see Table 1). 
-The confusion matrix of the leave-one-subject-out test is illustrated on Figure 2.
-
-Using homogeonous data to predict the outcome.  I cleaned the data base by removing variables that were unlikely to improve the prediction of the exercise outcome.
-I removed columns containg identifying information and muliple NAs. My trianing models included 53 variables from roll belt to gyros forearm.
 ```{r, echo=F}
 library(dplyr)
 library(ggplot2)
@@ -31,24 +20,15 @@ library(caret)
 library(AppliedPredictiveModeling)
 library(randomForest)
 library(rpart)
-library(party)
-library(e1071)
-library(ROCR)
 library(rattle)
 
-
 pml <- read.csv("pml-training.csv", stringsAsFactors=F)
-
-View(pml)
-
-#split variables into homogeneous groups
 sub <- select(pml, c(roll_belt:total_accel_belt, gyros_belt_x:total_accel_arm, gyros_arm_x:magnet_arm_z, roll_dumbbell:yaw_dumbbell, total_accel_dumbbell, gyros_dumbbell_x:yaw_forearm, total_accel_forearm, gyros_forearm_x:classe))
 newsub <- mutate(sub, fcasse=as.factor(classe))
 newsub$classe <- NULL
 ```
-Developing a algort to predict exericse outcomes
-Define the error rate for prediction and split the data into a training and testing subset. I split 80% of the data into the training group, leaving 20% for the training group. 
-I choose the random forest method for training because it works with classification data as found in this data base and is capable of dealing with a high noise rate. Finally I used cross validation
+## Developing a algorithm to predict exericse quality
+ I first split 80% of the data into the training group, leaving 20% for the testing group. I did an initial evaluation of the variables training the models with the "rpart" method.  The branching diagram is shown below.
 
 ```{r}
 View(newsub)
@@ -56,41 +36,33 @@ set.seed(7598)
 trainpml = createDataPartition(newsub$fcasse, p =0.80, list=FALSE)
 training = newsub[trainpml,]
 testing = newsub[-trainpml,]
+set.seed(1001)
+fit2  <- train(training$fcasse~., data = training, method ="rpart")
+print(fit2, digits=3)
+fancyRpartPlot(fit2$finalModel)
+```
+After evaluatibg tge variables I choose the random forest method for training because it works with classification data as found in this data base and is capable of dealing with a high noise rate. I used cross validation in my model.
+```{r}
 fit1a <- train( fcasse ~ ., method = "rf", data=training, trcontrol= trainControl(method = "cv", number =7), prox= TRUE, allowParallel=TRUE) 
 tr <- getTree(fit1a$finalMode)
-fit1g <- rpart(fcasse ~ ., data=training, method="class")
 printRandomForests(fit1a, models=NULL)
 print(fit1a$finalModel)
 ErrorPlot <- plot(tr, main="Classification Tree")
-
-tr <- getTree(fancyRpartPlot(fit1g, main ="Example of Tree"))
-confmat <- confusionMatrix(fit1a, training, type = "prob")
 ```
 
-
-
 ## Estimating Error with Cross Validation
-
+I used cross validation to predict the error rate. 
 The estimated out of bag error for this model was 0.58% based upon the training set data. 
-When the model was applied to the testing data set the calculated error rate was 0.008% better than the estimate OOB.
-## Confusion Matrix
-###A confusion matrix shows the number of correct and incorrect predictions made by the classification model compared to the actual outcomes (target value) in the data. The matrix is NxN, where N is the number of target values (classes). Performance of such models is commonly evaluated using the data in the matrix. The following table displays a 2x2 confusion matrix for two classes (Positive and Negative).
-Testing the model to determine its abiity to accurately predict the classe of exercise. I applied my model to the tesing portion of the data.  
-The accuracy rate was caculated at 99.23% using this model.
+When the model was applied to the testing data set the calculated error rate was 0.008% better than the estimate OOB.The accuracy rate was caculated at 99.23% using this model.
 
-cfplot <- ggplot(fit1a$finalModel)
-cfplot + geom_step(fill=Freq) + scale_x_discrete
 ```{r}
 testa <- predict(fit1a, testing)
 getTree(testa)
 plot(testa) + testa +geom_map(fill=Freq)
-
 ```
 
-
-
-
 ## Use model to predict class in new test data
+The model developed above was used to predict the unknowns provided in the assignment.  The model accurately predicated the classe for the 20 unknowns.
 
 ```{r, echo=FALSE}
 pmltest <- read.csv("pml-testing.csv", stringsAsFactors = FALSE)
@@ -98,18 +70,9 @@ View(pmltest)
 predict(fit1a, pmltest)
 ```
 
+## Summary
+I produced a model using the random forest method that identified the correct class of exercise with excellent accuracy, > 98%. Evaluating the model I determined that roll belt was the initial branch point, followed by the pitch forearm and magnet dumbbell,  These variables accounted for them majority of the accuracy. This model allowed me to correctly identify the unknown excerises.  The data for this model was originally published in 
+Velloso, E.; Bulling, A.; Gellersen, H.; Ugulino, W.; Fuks, H. Qualitative Activity Recognition of Weight Lifting Exercises. Proceedings of 4th International Conference in Cooperation with SIGCHI (Augmented Human '13) . Stuttgart, Germany: ACM SIGCHI, 2013.
 
-# Submission to Coursera
-```{r}
-pml_write_files = function(x){
-  n = length(x)
-  path <- "predictionAssignment_files/answers"
-  for(i in 1:n){
-    filename = paste0("problem_id_",i,".txt")
-    write.table(x[i],file=file.path(path, filename),quote=FALSE,row.names=FALSE,col.names=FALSE)
-  }
-}
-pml_write_files(hat)
-```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
