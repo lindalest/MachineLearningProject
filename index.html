@@ -1,36 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on https://github.com/jonrohan -->
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <title>Machinelearningproject by lindalest</title>
-  </head>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <body>
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
+  <link rel="stylesheet" href="stylesheets/github-dark.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Machinelearningproject</title>
+  <meta name="description" content="HTML of project for Machine Learning Coursera course">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Machinelearningproject</h1>
+    </header>
     <div id="container">
-      <div class="inner">
-
-        <header>
-          <h1>Machinelearningproject</h1>
-          <h2>HTML of project for Machine Learning Coursera course</h2>
-        </header>
-
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/lindalest/MachineLearningProject/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/lindalest/MachineLearningProject/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/lindalest/MachineLearningProject" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
+      <p class="tagline">HTML of project for Machine Learning Coursera course</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/lindalest/MachineLearningProject/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/lindalest/MachineLearningProject/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/lindalest/MachineLearningProject" class="code">View Machinelearningproject on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
           <hr>
 
 <p>title: "Machine Learning Project"
@@ -43,20 +48,12 @@ date: "August 4, 2015"</p>
 <h2>
 <a id="executive-summary" class="anchor" href="#executive-summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Executive Summary</h2>
 
-<p>The goal of this project is to predict the manner of the exercise, classe,  by building a model using one of several variable available in the data base.<br>
-what you think the expected out of sample error is, and why you made the choices you did. You will also use your prediction model to predict 20 different test cases. 
-Start with question- input data- features-algorithm-parameters-evaluation
-training set- pick features, use cross validation
-Does the submission build a machine learning algorithm to predict activity quality from activity monitors?</p>
+<p>The goal of this project is to predict the manner of the exercise, classe,  by building a model using one of several variables available in the data base.  The data base is a collection of exercise m ovements captured using devices such as Jawbone and Fitbit.  Six individuals were recorded and the quality of their exercise was graded from A-E, with A indicating the exercise was performed correctly.  Using this data set I trained a model to identify the exercise quality and used this model to correctly predict the exercise grad for 20 unknowns.</p>
 
-<p>Velloso, E.; Bulling, A.; Gellersen, H.; Ugulino, W.; Fuks, H. Qualitative Activity Recognition of Weight Lifting Exercises. Proceedings of 4th International Conference in Cooperation with SIGCHI (Augmented Human '13) . Stuttgart, Germany: ACM SIGCHI, 2013.</p>
+<h3>
+<a id="cleaning-the-data" class="anchor" href="#cleaning-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cleaning the Data</h3>
 
-<p>Unilateral Dumbbell Biceps Curl, Unilateral Dumbbell Triceps Exten- sion and Unilateral Dumbbell Lateral Raise.
-Because of the characteristic noise in the sensor data, we used a Random Forest approach [28]. This algorithm is characterized by a subset of features, selected in a random and independent manner with the same distribution for each of the trees in the forest. To improve recognition performance we used an ensemble of classifiers using the “Bagging” method [6]. We used 10 random forests and each forest was implemented with 10 trees. The classifier was tested with 10-fold cross-validation and different windows sizes, all of them with 0.5s overlapping (except the window with 0.5s). The best window size found for this classification task was of 2.5s and the overall recognition performance was of 98.03% (see Table 1). 
-The confusion matrix of the leave-one-subject-out test is illustrated on Figure 2.</p>
-
-<p>Using homogeonous data to predict the outcome.  I cleaned the data base by removing variables that were unlikely to improve the prediction of the exercise outcome.
-I removed columns containg identifying information and muliple NAs. My trianing models included 53 variables from roll belt to gyros forearm.</p>
+<p>I reviewed the data set and noted that the first few columns contained descriptive data such as the date and time of the exercise.  This data was not useful for the purpose of predicting the exercise quality and was removed.  In addition, several other columns contained predominatey blanks or NAs.  These columns were removed as well to produce a smaller, neater data set of 53 variables, all of which were likely to improve the prediction of exercise quality.</p>
 
 <div class="highlight highlight-r,"><pre>library(<span class="pl-smi">dplyr</span>)
 library(<span class="pl-smi">ggplot2</span>)
@@ -66,93 +63,83 @@ library(<span class="pl-smi">caret</span>)
 library(<span class="pl-smi">AppliedPredictiveModeling</span>)
 library(<span class="pl-smi">randomForest</span>)
 library(<span class="pl-smi">rpart</span>)
-library(<span class="pl-smi">party</span>)
-library(<span class="pl-smi">e1071</span>)
-library(<span class="pl-smi">ROCR</span>)
 library(<span class="pl-smi">rattle</span>)
 
-
 <span class="pl-smi">pml</span> <span class="pl-k">&lt;-</span> read.csv(<span class="pl-s"><span class="pl-pds">"</span>pml-training.csv<span class="pl-pds">"</span></span>, <span class="pl-v">stringsAsFactors</span><span class="pl-k">=</span><span class="pl-c1">F</span>)
-
-View(<span class="pl-smi">pml</span>)
-
-<span class="pl-c">#split variables into homogeneous groups</span>
 <span class="pl-smi">sub</span> <span class="pl-k">&lt;-</span> select(<span class="pl-smi">pml</span>, c(<span class="pl-smi">roll_belt</span><span class="pl-k">:</span><span class="pl-smi">total_accel_belt</span>, <span class="pl-smi">gyros_belt_x</span><span class="pl-k">:</span><span class="pl-smi">total_accel_arm</span>, <span class="pl-smi">gyros_arm_x</span><span class="pl-k">:</span><span class="pl-smi">magnet_arm_z</span>, <span class="pl-smi">roll_dumbbell</span><span class="pl-k">:</span><span class="pl-smi">yaw_dumbbell</span>, <span class="pl-smi">total_accel_dumbbell</span>, <span class="pl-smi">gyros_dumbbell_x</span><span class="pl-k">:</span><span class="pl-smi">yaw_forearm</span>, <span class="pl-smi">total_accel_forearm</span>, <span class="pl-smi">gyros_forearm_x</span><span class="pl-k">:</span><span class="pl-smi">classe</span>))
 <span class="pl-smi">newsub</span> <span class="pl-k">&lt;-</span> mutate(<span class="pl-smi">sub</span>, <span class="pl-v">fcasse</span><span class="pl-k">=</span>as.factor(<span class="pl-smi">classe</span>))
 <span class="pl-smi">newsub</span><span class="pl-k">$</span><span class="pl-smi">classe</span> <span class="pl-k">&lt;-</span> <span class="pl-c1">NULL</span></pre></div>
 
-<p>Developing a algort to predict exericse outcomes
-Define the error rate for prediction and split the data into a training and testing subset. I split 80% of the data into the training group, leaving 20% for the training group. 
-I choose the random forest method for training because it works with classification data as found in this data base and is capable of dealing with a high noise rate. Finally I used cross validation</p>
+<h2>
+<a id="developing-a-algorithm-to-predict-exericse-quality" class="anchor" href="#developing-a-algorithm-to-predict-exericse-quality" aria-hidden="true"><span class="octicon octicon-link"></span></a>Developing a algorithm to predict exericse quality</h2>
+
+<p>I first split 80% of the data into the training group, leaving 20% for the testing group. I did an initial evaluation of the variables training the model with the "rpart" method. The branching diagram graph can be found in file name Rplot-Exercise.png. </p>
 
 <div class="highlight highlight-r"><pre>View(<span class="pl-smi">newsub</span>)
 set.seed(<span class="pl-c1">7598</span>)
 <span class="pl-v">trainpml</span> <span class="pl-k">=</span> createDataPartition(<span class="pl-smi">newsub</span><span class="pl-k">$</span><span class="pl-smi">fcasse</span>, <span class="pl-v">p</span> <span class="pl-k">=</span><span class="pl-c1">0.80</span>, <span class="pl-v">list</span><span class="pl-k">=</span><span class="pl-c1">FALSE</span>)
 <span class="pl-v">training</span> <span class="pl-k">=</span> <span class="pl-smi">newsub</span>[<span class="pl-smi">trainpml</span>,]
 <span class="pl-v">testing</span> <span class="pl-k">=</span> <span class="pl-smi">newsub</span>[<span class="pl-k">-</span><span class="pl-smi">trainpml</span>,]
-<span class="pl-smi">fit1a</span> <span class="pl-k">&lt;-</span> train( <span class="pl-smi">fcasse</span> <span class="pl-k">~</span> ., <span class="pl-v">method</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>rf<span class="pl-pds">"</span></span>, <span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-smi">training</span>, <span class="pl-v">trcontrol</span><span class="pl-k">=</span> trainControl(<span class="pl-v">method</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>cv<span class="pl-pds">"</span></span>, <span class="pl-v">number</span> <span class="pl-k">=</span><span class="pl-c1">7</span>), <span class="pl-v">prox</span><span class="pl-k">=</span> <span class="pl-c1">TRUE</span>, <span class="pl-v">allowParallel</span><span class="pl-k">=</span><span class="pl-c1">TRUE</span>) 
+set.seed(<span class="pl-c1">1001</span>)
+<span class="pl-smi">fit2</span>  <span class="pl-k">&lt;-</span> train(<span class="pl-smi">training</span><span class="pl-k">$</span><span class="pl-smi">fcasse</span><span class="pl-k">~</span>., <span class="pl-v">data</span> <span class="pl-k">=</span> <span class="pl-smi">training</span>, <span class="pl-v">method</span> <span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>rpart<span class="pl-pds">"</span></span>)
+print(<span class="pl-smi">fit2</span>, <span class="pl-v">digits</span><span class="pl-k">=</span><span class="pl-c1">3</span>)
+fancyRpartPlot(<span class="pl-smi">fit2</span><span class="pl-k">$</span><span class="pl-smi">finalModel</span>)</pre></div>
+
+<p>After evaluating the variables I choose the random forest method for training because it works with classification data as found in this data base and is capable of dealing with a high noise rate. I used cross validation in my model.</p>
+
+<div class="highlight highlight-r"><pre><span class="pl-smi">fit1a</span> <span class="pl-k">&lt;-</span> train( <span class="pl-smi">fcasse</span> <span class="pl-k">~</span> ., <span class="pl-v">method</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>rf<span class="pl-pds">"</span></span>, <span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-smi">training</span>, <span class="pl-v">trcontrol</span><span class="pl-k">=</span> trainControl(<span class="pl-v">method</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>cv<span class="pl-pds">"</span></span>, <span class="pl-v">number</span> <span class="pl-k">=</span><span class="pl-c1">7</span>), <span class="pl-v">prox</span><span class="pl-k">=</span> <span class="pl-c1">TRUE</span>, <span class="pl-v">allowParallel</span><span class="pl-k">=</span><span class="pl-c1">TRUE</span>) 
 <span class="pl-smi">tr</span> <span class="pl-k">&lt;-</span> getTree(<span class="pl-smi">fit1a</span><span class="pl-k">$</span><span class="pl-smi">finalMode</span>)
-<span class="pl-smi">fit1g</span> <span class="pl-k">&lt;-</span> rpart(<span class="pl-smi">fcasse</span> <span class="pl-k">~</span> ., <span class="pl-v">data</span><span class="pl-k">=</span><span class="pl-smi">training</span>, <span class="pl-v">method</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>class<span class="pl-pds">"</span></span>)
 printRandomForests(<span class="pl-smi">fit1a</span>, <span class="pl-v">models</span><span class="pl-k">=</span><span class="pl-c1">NULL</span>)
 print(<span class="pl-smi">fit1a</span><span class="pl-k">$</span><span class="pl-smi">finalModel</span>)
-<span class="pl-smi">ErrorPlot</span> <span class="pl-k">&lt;-</span> plot(<span class="pl-smi">tr</span>, <span class="pl-v">main</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Classification Tree<span class="pl-pds">"</span></span>)
-
-<span class="pl-smi">tr</span> <span class="pl-k">&lt;-</span> getTree(fancyRpartPlot(<span class="pl-smi">fit1g</span>, <span class="pl-v">main</span> <span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Example of Tree<span class="pl-pds">"</span></span>))
-<span class="pl-smi">confmat</span> <span class="pl-k">&lt;-</span> confusionMatrix(<span class="pl-smi">fit1a</span>, <span class="pl-smi">training</span>, <span class="pl-v">type</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>prob<span class="pl-pds">"</span></span>)</pre></div>
+<span class="pl-smi">ErrorPlot</span> <span class="pl-k">&lt;-</span> plot(<span class="pl-smi">tr</span>, <span class="pl-v">main</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Classification Tree<span class="pl-pds">"</span></span>)</pre></div>
 
 <h2>
 <a id="estimating-error-with-cross-validation" class="anchor" href="#estimating-error-with-cross-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Estimating Error with Cross Validation</h2>
 
-<p>The estimated out of bag error for this model was 0.58% based upon the training set data. 
-When the model was applied to the testing data set the calculated error rate was 0.008% better than the estimate OOB.</p>
-
-<h2>
-<a id="confusion-matrix" class="anchor" href="#confusion-matrix" aria-hidden="true"><span class="octicon octicon-link"></span></a>Confusion Matrix</h2>
-
-<h3>
-<a id="a-confusion-matrix-shows-the-number-of-correct-and-incorrect-predictions-made-by-the-classification-model-compared-to-the-actual-outcomes-target-value-in-the-data-the-matrix-is-nxn-where-n-is-the-number-of-target-values-classes-performance-of-such-models-is-commonly-evaluated-using-the-data-in-the-matrix-the-following-table-displays-a-2x2-confusion-matrix-for-two-classes-positive-and-negative" class="anchor" href="#a-confusion-matrix-shows-the-number-of-correct-and-incorrect-predictions-made-by-the-classification-model-compared-to-the-actual-outcomes-target-value-in-the-data-the-matrix-is-nxn-where-n-is-the-number-of-target-values-classes-performance-of-such-models-is-commonly-evaluated-using-the-data-in-the-matrix-the-following-table-displays-a-2x2-confusion-matrix-for-two-classes-positive-and-negative" aria-hidden="true"><span class="octicon octicon-link"></span></a>A confusion matrix shows the number of correct and incorrect predictions made by the classification model compared to the actual outcomes (target value) in the data. The matrix is NxN, where N is the number of target values (classes). Performance of such models is commonly evaluated using the data in the matrix. The following table displays a 2x2 confusion matrix for two classes (Positive and Negative).</h3>
-
-<p>Testing the model to determine its abiity to accurately predict the classe of exercise. I applied my model to the tesing portion of the data.<br>
-The accuracy rate was caculated at 99.23% using this model.</p>
-
-<p>cfplot &lt;- ggplot(fit1a$finalModel)
-cfplot + geom_step(fill=Freq) + scale_x_discrete</p>
+<p>I used cross validation to predict the error rate. 
+The estimated out of bag error for this model was 0.58% based upon the training set data. 
+When the model was applied to the testing data set the calculated error rate was 0.008% better than the estimate OOB.The accuracy rate was caculated at 99.23% using this model.</p>
 
 <div class="highlight highlight-r"><pre><span class="pl-smi">testa</span> <span class="pl-k">&lt;-</span> predict(<span class="pl-smi">fit1a</span>, <span class="pl-smi">testing</span>)
 getTree(<span class="pl-smi">testa</span>)
-plot(<span class="pl-smi">testa</span>) <span class="pl-k">+</span> <span class="pl-smi">testa</span> <span class="pl-k">+</span>geom_map(<span class="pl-v">fill</span><span class="pl-k">=</span><span class="pl-smi">Freq</span>)
-</pre></div>
+plot(<span class="pl-smi">testa</span>) <span class="pl-k">+</span> <span class="pl-smi">testa</span> <span class="pl-k">+</span>geom_map(<span class="pl-v">fill</span><span class="pl-k">=</span><span class="pl-smi">Freq</span>)</pre></div>
 
 <h2>
 <a id="use-model-to-predict-class-in-new-test-data" class="anchor" href="#use-model-to-predict-class-in-new-test-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use model to predict class in new test data</h2>
+
+<p>The model developed above was used to predict the unknowns provided in the assignment.  The model accurately predicated the classe for the 20 unknowns.</p>
 
 <div class="highlight highlight-r,"><pre><span class="pl-smi">pmltest</span> <span class="pl-k">&lt;-</span> read.csv(<span class="pl-s"><span class="pl-pds">"</span>pml-testing.csv<span class="pl-pds">"</span></span>, <span class="pl-v">stringsAsFactors</span> <span class="pl-k">=</span> <span class="pl-c1">FALSE</span>)
 View(<span class="pl-smi">pmltest</span>)
 predict(<span class="pl-smi">fit1a</span>, <span class="pl-smi">pmltest</span>)</pre></div>
 
-<h1>
-<a id="submission-to-coursera" class="anchor" href="#submission-to-coursera" aria-hidden="true"><span class="octicon octicon-link"></span></a>Submission to Coursera</h1>
+<p>Answers: BABAAEDBAABCBAEEABBB</p>
 
-<div class="highlight highlight-r"><pre><span class="pl-v">pml_write_files</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">x</span>){
-  <span class="pl-v">n</span> <span class="pl-k">=</span> length(<span class="pl-smi">x</span>)
-  <span class="pl-smi">path</span> <span class="pl-k">&lt;-</span> <span class="pl-s"><span class="pl-pds">"</span>predictionAssignment_files/answers<span class="pl-pds">"</span></span>
-  <span class="pl-k">for</span>(<span class="pl-smi">i</span> <span class="pl-k">in</span> <span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-smi">n</span>){
-    <span class="pl-v">filename</span> <span class="pl-k">=</span> paste0(<span class="pl-s"><span class="pl-pds">"</span>problem_id_<span class="pl-pds">"</span></span>,<span class="pl-smi">i</span>,<span class="pl-s"><span class="pl-pds">"</span>.txt<span class="pl-pds">"</span></span>)
-    write.table(<span class="pl-smi">x</span>[<span class="pl-smi">i</span>],<span class="pl-v">file</span><span class="pl-k">=</span>file.path(<span class="pl-smi">path</span>, <span class="pl-smi">filename</span>),<span class="pl-v">quote</span><span class="pl-k">=</span><span class="pl-c1">FALSE</span>,<span class="pl-v">row.names</span><span class="pl-k">=</span><span class="pl-c1">FALSE</span>,<span class="pl-v">col.names</span><span class="pl-k">=</span><span class="pl-c1">FALSE</span>)
-  }
-}
-pml_write_files(<span class="pl-smi">hat</span>)</pre></div>
+<h2>
+<a id="summary" class="anchor" href="#summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary</h2>
 
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
-        </section>
-
-        <footer>
-          Machinelearningproject is maintained by <a href="https://github.com/lindalest">lindalest</a><br>
-          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-        
+<p>I produced a model using the random forest method that identified the correct class of exercise with excellent accuracy, &gt; 98%. Evaluating the model I determined that roll belt was the initial branch point, followed by the pitch forearm and magnet dumbbell,  These variables accounted for them majority of the accuracy. This model allowed me to correctly identify the unknown excerises.  The data for this model was originally published in 
+Velloso, E.; Bulling, A.; Gellersen, H.; Ugulino, W.; Fuks, H. Qualitative Activity Recognition of Weight Lifting Exercises. Proceedings of 4th International Conference in Cooperation with SIGCHI (Augmented Human '13) . Stuttgart, Germany: ACM SIGCHI, 2013.</p>
+        </article>
       </div>
     </div>
-  </body>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/lindalest" class="avatar"><img src="https://avatars2.githubusercontent.com/u/10518262?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/lindalest">lindalest</a> maintains <a href="https://github.com/lindalest/MachineLearningProject">Machinelearningproject</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br>theme by <a href="https://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/lindalest/MachineLearningProject/tarball/master" class="tar">tar</a><a href="https://github.com/lindalest/MachineLearningProject/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
 </html>
