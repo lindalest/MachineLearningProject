@@ -33,7 +33,7 @@ newsub$classe <- NULL
 ```{r}
 View(newsub)
 set.seed(7598)
-trainpml = createDataPartition(newsub$fcasse, p =0.80, list=FALSE)
+trainpml = createDataPartition(newsub$fcasse, p =0.10, list=FALSE)
 training = newsub[trainpml,]
 testing = newsub[-trainpml,]
 set.seed(1001)
@@ -57,8 +57,22 @@ When the model was applied to the testing data set the calculated error rate was
 
 ```{r}
 testa <- predict(fit1a, testing)
-getTree(testa)
-plot(testa) + testa +geom_map(fill=Freq)
+print(fit1a$finalModel)
+
+Call:
+ randomForest(x = x, y = y, mtry = param$mtry, proximity = TRUE,      trcontrol = ..1, allowParallel = TRUE) 
+               Type of random forest: classification
+                     Number of trees: 500
+No. of variables tried at each split: 2
+
+        OOB estimate of  error rate: 5.7%
+Confusion matrix:
+    A   B   C   D   E class.error
+A 550   5   1   2   0  0.01433692
+B  25 341  11   2   1  0.10263158
+C   0  15 323   3   2  0.05830904
+D   5   3  20 293   1  0.09006211
+E   2   1   9   4 345  0.04432133
 ```
 
 ## Use model to predict class in new test data
