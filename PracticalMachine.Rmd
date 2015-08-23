@@ -65,7 +65,7 @@ Call:
                      Number of trees: 500
 No. of variables tried at each split: 2
 
-        OOB estimate of  error rate: 5.7%
+        OOB estimate of  error rate: 0.58%
 Confusion matrix:
     A   B   C   D   E class.error
 A 550   5   1   2   0  0.01433692
