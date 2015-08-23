@@ -60,7 +60,7 @@ library(<span class="pl-smi">rattle</span>)
 
 <div class="highlight highlight-r"><pre>View(<span class="pl-smi">newsub</span>)
 set.seed(<span class="pl-c1">7598</span>)
-<span class="pl-v">trainpml</span> <span class="pl-k">=</span> createDataPartition(<span class="pl-smi">newsub</span><span class="pl-k">$</span><span class="pl-smi">fcasse</span>, <span class="pl-v">p</span> <span class="pl-k">=</span><span class="pl-c1">0.80</span>, <span class="pl-v">list</span><span class="pl-k">=</span><span class="pl-c1">FALSE</span>)
+<span class="pl-v">trainpml</span> <span class="pl-k">=</span> createDataPartition(<span class="pl-smi">newsub</span><span class="pl-k">$</span><span class="pl-smi">fcasse</span>, <span class="pl-v">p</span> <span class="pl-k">=</span><span class="pl-c1">0.10</span>, <span class="pl-v">list</span><span class="pl-k">=</span><span class="pl-c1">FALSE</span>)
 <span class="pl-v">training</span> <span class="pl-k">=</span> <span class="pl-smi">newsub</span>[<span class="pl-smi">trainpml</span>,]
 <span class="pl-v">testing</span> <span class="pl-k">=</span> <span class="pl-smi">newsub</span>[<span class="pl-k">-</span><span class="pl-smi">trainpml</span>,]
 set.seed(<span class="pl-c1">1001</span>)
@@ -84,8 +84,22 @@ The estimated out of bag error for this model was 0.58% based upon the training 
 When the model was applied to the testing data set the calculated error rate was 0.008% better than the estimate OOB.The accuracy rate was caculated at 99.23% using this model.</p>
 
 <div class="highlight highlight-r"><pre><span class="pl-smi">testa</span> <span class="pl-k">&lt;-</span> predict(<span class="pl-smi">fit1a</span>, <span class="pl-smi">testing</span>)
-getTree(<span class="pl-smi">testa</span>)
-plot(<span class="pl-smi">testa</span>) <span class="pl-k">+</span> <span class="pl-smi">testa</span> <span class="pl-k">+</span>geom_map(<span class="pl-v">fill</span><span class="pl-k">=</span><span class="pl-smi">Freq</span>)</pre></div>
+print(<span class="pl-smi">fit1a</span><span class="pl-k">$</span><span class="pl-smi">finalModel</span>)
+
+<span class="pl-smi">Call</span><span class="pl-k">:</span>
+ randomForest(<span class="pl-v">x</span> <span class="pl-k">=</span> <span class="pl-smi">x</span>, <span class="pl-v">y</span> <span class="pl-k">=</span> <span class="pl-smi">y</span>, <span class="pl-v">mtry</span> <span class="pl-k">=</span> <span class="pl-smi">param</span><span class="pl-k">$</span><span class="pl-smi">mtry</span>, <span class="pl-v">proximity</span> <span class="pl-k">=</span> <span class="pl-c1">TRUE</span>,      <span class="pl-v">trcontrol</span> <span class="pl-k">=</span> ..<span class="pl-c1">1</span>, <span class="pl-v">allowParallel</span> <span class="pl-k">=</span> <span class="pl-c1">TRUE</span>) 
+               <span class="pl-smi">Type</span> <span class="pl-smi">of</span> <span class="pl-smi">random</span> <span class="pl-smi">forest</span><span class="pl-k">:</span> <span class="pl-smi">classification</span>
+                     <span class="pl-smi">Number</span> <span class="pl-smi">of</span> <span class="pl-smi">trees</span><span class="pl-k">:</span> <span class="pl-c1">500</span>
+<span class="pl-smi">No</span>. <span class="pl-smi">of</span> <span class="pl-smi">variables</span> <span class="pl-smi">tried</span> <span class="pl-smi">at</span> <span class="pl-smi">each</span> <span class="pl-smi">split</span><span class="pl-k">:</span> <span class="pl-c1">2</span>
+
+        <span class="pl-smi">OOB</span> <span class="pl-smi">estimate</span> <span class="pl-smi">of</span>  <span class="pl-smi">error</span> <span class="pl-smi">rate</span><span class="pl-k">:</span> <span class="pl-c1">0.58</span>%
+<span class="pl-smi">Confusion</span> <span class="pl-smi">matrix</span><span class="pl-k">:</span>
+    <span class="pl-smi">A</span>   <span class="pl-smi">B</span>   <span class="pl-smi">C</span>   <span class="pl-smi">D</span>   <span class="pl-smi">E</span> <span class="pl-smi">class.error</span>
+<span class="pl-smi">A</span> <span class="pl-c1">550</span>   <span class="pl-c1">5</span>   <span class="pl-c1">1</span>   <span class="pl-c1">2</span>   <span class="pl-c1">0</span>  <span class="pl-c1">0.01433692</span>
+<span class="pl-smi">B</span>  <span class="pl-c1">25</span> <span class="pl-c1">341</span>  <span class="pl-c1">11</span>   <span class="pl-c1">2</span>   <span class="pl-c1">1</span>  <span class="pl-c1">0.10263158</span>
+<span class="pl-smi">C</span>   <span class="pl-c1">0</span>  <span class="pl-c1">15</span> <span class="pl-c1">323</span>   <span class="pl-c1">3</span>   <span class="pl-c1">2</span>  <span class="pl-c1">0.05830904</span>
+<span class="pl-smi">D</span>   <span class="pl-c1">5</span>   <span class="pl-c1">3</span>  <span class="pl-c1">20</span> <span class="pl-c1">293</span>   <span class="pl-c1">1</span>  <span class="pl-c1">0.09006211</span>
+<span class="pl-smi">E</span>   <span class="pl-c1">2</span>   <span class="pl-c1">1</span>   <span class="pl-c1">9</span>   <span class="pl-c1">4</span> <span class="pl-c1">345</span>  <span class="pl-c1">0.04432133</span></pre></div>
 
 <h2>
 <a id="use-model-to-predict-class-in-new-test-data" class="anchor" href="#use-model-to-predict-class-in-new-test-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use model to predict class in new test data</h2>
