@@ -28,7 +28,7 @@ newsub <- mutate(sub, fcasse=as.factor(classe))
 newsub$classe <- NULL
 ```
 ## Developing a algorithm to predict exericse quality
- I first split 80% of the data into the training group, leaving 20% for the testing group. I did an initial evaluation of the variables training the models with the "rpart" method.  The branching diagram is shown below.
+ I first split 80% of the data into the training group, leaving 20% for the testing group. I did an initial evaluation of the variables training the model with the "rpart" method. The branching diagram graph can be found in file name Rplot-Exercise.png. 
 
 ```{r}
 View(newsub)
@@ -41,7 +41,7 @@ fit2  <- train(training$fcasse~., data = training, method ="rpart")
 print(fit2, digits=3)
 fancyRpartPlot(fit2$finalModel)
 ```
-After evaluatibg tge variables I choose the random forest method for training because it works with classification data as found in this data base and is capable of dealing with a high noise rate. I used cross validation in my model.
+After evaluating the variables I choose the random forest method for training because it works with classification data as found in this data base and is capable of dealing with a high noise rate. I used cross validation in my model.
 ```{r}
 fit1a <- train( fcasse ~ ., method = "rf", data=training, trcontrol= trainControl(method = "cv", number =7), prox= TRUE, allowParallel=TRUE) 
 tr <- getTree(fit1a$finalMode)
@@ -69,7 +69,7 @@ pmltest <- read.csv("pml-testing.csv", stringsAsFactors = FALSE)
 View(pmltest)
 predict(fit1a, pmltest)
 ```
-
+ Answers: BABAAEDBAABCBAEEABBB
 ## Summary
 I produced a model using the random forest method that identified the correct class of exercise with excellent accuracy, > 98%. Evaluating the model I determined that roll belt was the initial branch point, followed by the pitch forearm and magnet dumbbell,  These variables accounted for them majority of the accuracy. This model allowed me to correctly identify the unknown excerises.  The data for this model was originally published in 
 Velloso, E.; Bulling, A.; Gellersen, H.; Ugulino, W.; Fuks, H. Qualitative Activity Recognition of Weight Lifting Exercises. Proceedings of 4th International Conference in Cooperation with SIGCHI (Augmented Human '13) . Stuttgart, Germany: ACM SIGCHI, 2013.
